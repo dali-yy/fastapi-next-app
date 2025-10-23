@@ -1,9 +1,11 @@
 from typing import Optional, Dict, Any
 
-from fastapi import APIRouter, HTTPException, Query, Form
+from fastapi import APIRouter, HTTPException, Query, Form, Request
+from fastapi.templating import Jinja2Templates
 
 from app.core.security import create_access_token
 
+templates = Jinja2Templates(directory="static/templates")
 
 # 配置
 ACCESS_TOKEN_EXPIRE_MINUTES = 60  # 访问令牌有效期1小时
@@ -100,3 +102,12 @@ async def token(
         "expires_in": ACCESS_TOKEN_EXPIRE_MINUTES * 60,
         "scope": scope
     }
+
+@router.get("/template")
+async def read_root(request: Request):
+    # 传递给模板的数据（键值对形式）
+    context = {
+        "request": request,  # 必须传递 request 对象（Jinja2 要求）
+    }
+    # 渲染 templates/index.html 模板，并返回
+    return templates.TemplateResponse("index.html", context)
