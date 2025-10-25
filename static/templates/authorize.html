@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Authorize Application</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; }
+        .app-info { background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .permissions { background-color: #e9ecef; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        button { padding: 10px 20px; margin-right: 10px; border: none; cursor: pointer; }
+        .allow { background-color: #28a745; color: white; }
+        .deny { background-color: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <h2>Authorize Application</h2>
+    <div class="app-info">
+        <h3>{{ client_name }}</h3>
+        <p>wants to access your account</p>
+    </div>
+    <div class="permissions">
+        <h4>This application would like to:</h4>
+        <ul>
+            <li>Access your basic profile information</li>
+            <li>{{ scope or 'basic' }} permissions</li>
+        </ul>
+    </div>
+    <form method="post">
+        <input type="hidden" name="client_id" value="{{ client_id }}">
+        <input type="hidden" name="redirect_uri" value="{{ redirect_uri }}">
+        <input type="hidden" name="scope" value="{{ scope or 'basic' }}">
+        <input type="hidden" name="state" value="{{ state or '' }}">
+        <button type="submit" name="allow" value="true" class="allow">Allow</button>
+        <button type="submit" name="allow" value="" class="deny">Deny</button>
+    </form>
+</body>
+</html>
