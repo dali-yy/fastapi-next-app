@@ -9,7 +9,7 @@ from fastapi.templating import Jinja2Templates
 
 from app.core.security import create_access_token
 
-templates = Jinja2Templates(directory="static/templates")
+templates = Jinja2Templates(directory="static")
 
 def generate_code():
     return secrets.token_urlsafe(32)
@@ -160,3 +160,10 @@ async def token(
         "expires_in": ACCESS_TOKEN_EXPIRE_MINUTES * 60,
         "scope": scope
     }
+
+
+@router.get("/template")
+async def test_template(request: Request):
+    context = {"request": request}
+    return templates.TemplateResponse("index.html", context)
+    

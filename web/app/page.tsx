@@ -1,8 +1,8 @@
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      测试
+    <div className="text-pink-700">
+      登录
     </div>
   );
 }
